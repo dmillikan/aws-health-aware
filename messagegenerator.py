@@ -480,25 +480,29 @@ def get_message_for_email(event_details, event_type, affected_accounts, affected
     # Not srue why we have the new line in the affected entities code here
     if len(affected_entities) >= 1:
         affected_entities = "\n".join(affected_entities)
+        resource_label = "Resources"
         if affected_entities == "UNKNOWN":
             affected_entities = "All resources\nin region"
     else:
         affected_entities = "All resources\nin region"
+        resource_label = "Resource"
     if len(affected_accounts) >= 1:
         affected_accounts = "\n".join(affected_accounts)
+        account_label = "Accounts"
     else:
         affected_accounts = "All accounts\nin region"
+        account_label = "Account"
     if event_type == "create":
         BODY_HTML = f"""
         <html>
             <body>
                 <h>Greetings from AWS Health Aware,</h><br>
                 <p>There is an AWS incident that is in effect which may likely impact your resources. Here are the details:<br><br>
-                <b>Account(s):</b> {affected_accounts}<br>
-                <b>Resource(s):</b> {affected_entities}<br>
+                <b>{account_label}:</b> {affected_accounts}<br>
+                <b>{resource_label}:</b> {affected_entities}<br>
                 <b>Service:</b> {event_details['successfulSet'][0]['event']['service']}<br>
                 <b>Region:</b> {event_details['successfulSet'][0]['event']['region']}<br>
-                <b>Start Time (UTC):</b> {cleanup_time(event_details['successfulSet'][0]['event']['startTime'])}<br>                
+                <b>Start Time UTC:</b> {cleanup_time(event_details['successfulSet'][0]['event']['startTime'])}<br>                
                 <b>Status:</b> {event_details['successfulSet'][0]['event']['statusCode']}<br>
                 <b>Event ARN:</b> {event_details['successfulSet'][0]['event']['arn']}<br> 
                 <b>Updates:</b> {event_details['successfulSet'][0]['eventDescription']['latestDescription']}<br><br>
@@ -515,12 +519,12 @@ def get_message_for_email(event_details, event_type, affected_accounts, affected
             <body>
                 <h>Greetings again from AWS Health Aware,</h><br>
                 <p>Good news! The AWS Health incident from earlier has now been marked as resolved.<br><br>
-                <b>Account(s):</b> {affected_accounts}<br>
-                <b>Resource(s):</b>   {affected_entities}<br>                         
+                <b>{account_label}:</b> {affected_accounts}<br>
+                <b>{resource_label}:</b> {affected_entities}<br>                        
                 <b>Service:</b> {event_details['successfulSet'][0]['event']['service']}<br>
                 <b>Region:</b> {event_details['successfulSet'][0]['event']['region']}<br>
-                <b>Start Time (UTC):</b> {cleanup_time(event_details['successfulSet'][0]['event']['startTime'])}<br>
-                <b>End Time (UTC):</b> {cleanup_time(event_details['successfulSet'][0]['event']['endTime'])}<br>
+                <b>Start Time UTC:</b> {cleanup_time(event_details['successfulSet'][0]['event']['startTime'])}<br>
+                <b>End Time UTC:</b> {cleanup_time(event_details['successfulSet'][0]['event']['endTime'])}<br>
                 <b>Status:</b> {event_details['successfulSet'][0]['event']['statusCode']}<br>                
                 <b>Event ARN:</b> {event_details['successfulSet'][0]['event']['arn']}<br>                
                 <b>Updates:</b> {event_details['successfulSet'][0]['eventDescription']['latestDescription']}<br><br>  
