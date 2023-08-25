@@ -591,7 +591,7 @@ def get_org_message_for_email(event_details, event_type, affected_org_accounts, 
         </html>
     """
     
-    BODY_HTML = BODY_HTML.replace("("," ")
+    BODY_HTML = BODY_HTML.replace("(","")
     BODY_HTML = BODY_HTML.replace(")","")
     print("Message sent to Email: ", BODY_HTML)
     return BODY_HTML
