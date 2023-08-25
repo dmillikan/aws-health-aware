@@ -531,6 +531,9 @@ def get_message_for_email(event_details, event_type, affected_accounts, affected
             </body>
         </html>
     """
+    
+    BODY_HTML = BODY_HTML.replace("("," ")
+    BODY_HTML = BODY_HTML.replace(")","")
     print("Message sent to Email: ", BODY_HTML)
     return BODY_HTML
 
@@ -544,6 +547,7 @@ def get_org_message_for_email(event_details, event_type, affected_org_accounts, 
         affected_org_accounts = "\n".join(affected_org_accounts)
     else:
         affected_org_accounts = "All accounts in region"
+   
     if event_type == "create":
         BODY_HTML = f"""
         <html>
@@ -586,6 +590,9 @@ def get_org_message_for_email(event_details, event_type, affected_org_accounts, 
             </body>
         </html>
     """
+    
+    BODY_HTML = BODY_HTML.replace("("," ")
+    BODY_HTML = BODY_HTML.replace(")","")
     print("Message sent to Email: ", BODY_HTML)
     return BODY_HTML
 
